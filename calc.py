@@ -51,7 +51,7 @@ class Mania:
 		strain2 = 1 + 0.1 * min(1, objectcount / 1500)
 		strainbase = strain2 * strain1
 		strainmult = score / 500000 * 0.1 if score < 500000 else ((score - 500000) / 100000 * 0.2 + 0.1 if score < 600000 else ((score - 600000) / 100000 * 0.35 + 0.3 if score < 700000 else ((score - 700000) / 100000 * 0.2 + 0.65 if score < 800000 else ((score - 800000) / 100000 * 0.1 + 0.85 if score < 900000 else ((score - 900000) / 100000 * 0.05 + 0.95)))))
-		accfinal = math.pow(math.pow((150 / pfwdw) * math.pow(acc / 100, 16), 1.8) * 2.5 * min(1.15, math.pow(objectcount / 1500, 0.3)), 1.1)
+		accfinal = math.pow(math.pow((150 / pfwdw) * math.pow(acc / 100, 16), 1.8) * 2.5 * min(1.15, math.pow(objectcount / 1500, 0.3)), 1.15)
 		strainfinal = math.pow(strainbase * strainmult, 1.1)
 		finalpp = math.pow(accfinal + strainfinal, 1 / 1.1) * 1.1
 
