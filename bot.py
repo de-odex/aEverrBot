@@ -551,9 +551,9 @@ class Bot(irc.IRCClient):
 						traceback.print_exc(file=open("err.log", "a"))
 						self.msg(user, "No mods?")
 				elif command == "h":
-					self.msg(user, "Need help? Check https://github.com/de-odex/aEverrBot/wiki for commands. ~~Most commands work now.~~")
+					self.msg(user, "Need help? Check [https://github.com/de-odex/aEverrBot/wiki the wiki] for commands. ~~Most commands work now.~~")
 				elif command == "help":
-					self.msg(user, "Need help? Check https://github.com/de-odex/aEverrBot/wiki for commands. ~~Most commands work now.~~")
+					self.msg(user, "Need help? Check [https://github.com/de-odex/aEverrBot/wiki the wiki] for commands. ~~Most commands work now.~~")
 				elif command == "r":
 					self.msg(user, "Command doesn't work yet, stay tuned! Under development.")
 				elif command == "uptime":
