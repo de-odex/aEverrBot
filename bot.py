@@ -59,7 +59,7 @@ class ProgramLogic:
 		self.file = file
 		self.repfile = open("reports.log", "a")
 		self.UPDATE_MSG = "eyo, its boterino here with an update ([https://aeverr.s-ul.eu/CpdBefOU sic]). Added mod support (HD FL for catch, NF EZ for mania). Added Mania Gamemode support. Change mode with !set mode [catch|mania]. Suspect to bugs, please help me test"
-		self.FIRST_TIME_MSG = "Welcome, and thanks for using my bot! Check out https://github.com/de-odex/aEverrBot/wiki for commands. !botreport to report a bug."
+		self.FIRST_TIME_MSG = "Welcome, and thanks for using my bot! Check out [https://github.com/de-odex/aEverrBot/wiki the wiki] for commands. !botreport to report a bug."
 
 	def log(self, message):
 		"""Write a message to the file."""
@@ -434,7 +434,7 @@ class ProgramLogic:
 		except NpError:
 			return "You haven't /np'd me anything yet!"
 		except AttrError:
-			return "Do it like me, \"!acc 95 200x 1m\". Or something, I dunno. Recheck https://github.com/de-odex/aEverrBot/wiki"
+			return "Do it like me, \"!acc 95 200x 1m\". Or something, I dunno. Please recheck [https://github.com/de-odex/aEverrBot/wiki the wiki] for more details"
 		except ComboError:
 			return "Something's up, or I guess in this case, down, with your combo."
 		except:
