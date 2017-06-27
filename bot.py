@@ -204,6 +204,7 @@ class ProgramLogic:
 				# mode checking
 				if beatmap_data[0]["mode"] != "0":
 					mode = int(beatmap_data[0]["mode"])
+					
 				else:
 					cur.execute("SELECT * FROM userdb WHERE user=?", (name,))
 					modedb = cur.fetchone()
@@ -221,12 +222,26 @@ class ProgramLogic:
 					end_props = str(round(float(beatmap_data[0]["difficultyrating"]), 2)) + "* " + time.strftime("%M:%S", time.gmtime(int(beatmap_data[0]["total_length"]))) + " AR" + str(beatmap_data[0]["diff_approach"]) + " MAX" + str(beatmap_data[0]["max_combo"])
 					sent = artist_name + " | osu!catch | SS: " + pp_vals[0] + "pp | 99.5% FC: " + pp_vals[1] + "pp | 99% FC: " + pp_vals[2] + "pp | 98.5% FC: " + pp_vals[3] + "pp | " + end_props
 				elif mode == 3:
+				
+					# Check whether the map is converted or not
+					# If the map is converted, take the keyamount from OD, else, take from CS
+					od = int(str(beatmap_data[0]["diff_overall"]))
+					if beatmap_data[0]["mode"] != "0":
+						keyamount = str(beatmap_data[0]["diff_size"])
+					else:
+						if od <= 4:
+							keyamount = str(4)
+						if od > 4 and od < 7:
+							keyamount = str(od)
+						if od >= 7:
+							keyamount = str(7)
+						
 					l = slider.library.Library("/osulib")
 					beatmap = l.download(beatmap_id=int(beatmap_data[0]["beatmap_id"]))
 
 					artist_name = beatmap_data[0]["artist"] + " - " + beatmap_data[0]["title"] + " [" + beatmap_data[0]["version"] + "]"
 					pp_vals = (str(self.calculatepp(beatmap_data[0], beatmap=beatmap, mode=mode)), str(self.calculatepp(beatmap_data[0], beatmap=beatmap, mode=mode, acc=99, score=970000)), str(self.calculatepp(beatmap_data[0], beatmap=beatmap, mode=mode, acc=97, score=900000)))
-					end_props = str(round(float(beatmap_data[0]["difficultyrating"]), 2)) + "* " + time.strftime("%M:%S", time.gmtime(int(beatmap_data[0]["total_length"]))) + " OD" + str(beatmap_data[0]["diff_overall"]) + " " + str(beatmap_data[0]["diff_size"]) + "key OBJ" + str(len(beatmap.hit_objects))
+					end_props = str(round(float(beatmap_data[0]["difficultyrating"]), 2)) + "* " + time.strftime("%M:%S", time.gmtime(int(beatmap_data[0]["total_length"]))) + " OD" + str(beatmap_data[0]["diff_overall"]) + " " + keyamount + "key OBJ" + str(len(beatmap.hit_objects))
 					sent = artist_name + " | osu!mania | SS: " + pp_vals[0] + "pp | 99% 970k: " + pp_vals[1] + "pp | 97% 900k: " + pp_vals[2] + "pp | " + end_props
 			# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			elif ident == "acm":
@@ -342,10 +357,23 @@ class ProgramLogic:
 					except:
 						return "Check your accuracy again, please"
 
+					# Check whether the map is converted or not
+					# If the map is converted, take the keyamount from OD, else, take from CS
+					od = int(str(beatmap_data[0]["diff_overall"]))
+					if beatmap_data[0]["mode"] != "0":
+						keyamount = str(beatmap_data[0]["diff_size"])
+					else:
+						if od <= 4:
+							keyamount = str(4)
+						if od > 4 and od < 7:
+							keyamount = str(od)
+						if od >= 7:
+							keyamount = str(7)
+						
 					acm_data_s[name] = [acc, score]
 					pp_vals = (str(self.calculatepp(beatmap_data[0], beatmap=beatmap, mode=mode, acc=acc, score=score, mods=mods)), )
 					accscore = str(acc) + "% " + str(score) + " " + mods_name
-					end_props = str(round(float(beatmap_data[0]["difficultyrating"]), 2)) + "* " + time.strftime("%M:%S", time.gmtime(int(beatmap_data[0]["total_length"]))) + " OD" + str(beatmap_data[0]["diff_overall"]) + " " + str(beatmap_data[0]["diff_size"]) + "key OBJ" + str(len(beatmap.hit_objects))
+					end_props = str(round(float(beatmap_data[0]["difficultyrating"]), 2)) + "* " + time.strftime("%M:%S", time.gmtime(int(beatmap_data[0]["total_length"]))) + " OD" + str(beatmap_data[0]["diff_overall"]) + " " + keyamount + "key OBJ" + str(len(beatmap.hit_objects))
 					sent = artist_name + " | osu!mania | " + accscore + ": " + pp_vals[0] + "pp | " + end_props
 			# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			elif ident == "mod":
@@ -418,9 +446,23 @@ class ProgramLogic:
 						acc, score = acm_data
 					else:
 						acc, score = (100, 1000000)
+						
+					# Check whether the map is converted or not
+					# If the map is converted, take the keyamount from OD, else, take from CS
+					od = int(str(beatmap_data[0]["diff_overall"]))
+					if beatmap_data[0]["mode"] != "0":
+						keyamount = str(beatmap_data[0]["diff_size"])
+					else:
+						if od <= 4:
+							keyamount = str(4)
+						if od > 4 and od < 7:
+							keyamount = str(od)
+						if od >= 7:
+							keyamount = str(7)
+						
 					pp_vals = (str(self.calculatepp(beatmap_data[0], beatmap=beatmap, mode=mode, acc=acc, score=score, mods=mods)), )
 					accscore = str(acc) + "% " + str(score) + " " + mods_name
-					end_props = str(round(float(beatmap_data[0]["difficultyrating"]), 2)) + "* " + time.strftime("%M:%S", time.gmtime(int(beatmap_data[0]["total_length"]))) + " OD" + str(beatmap_data[0]["diff_overall"]) + " " + str(beatmap_data[0]["diff_size"]) + "key OBJ" + str(len(beatmap.hit_objects))
+					end_props = str(round(float(beatmap_data[0]["difficultyrating"]), 2)) + "* " + time.strftime("%M:%S", time.gmtime(int(beatmap_data[0]["total_length"]))) + " OD" + str(beatmap_data[0]["diff_overall"]) + " " + keyamount + "key OBJ" + str(len(beatmap.hit_objects))
 					sent = artist_name + " | osu!mania | " + accscore + ": " + pp_vals[0] + "pp | " + end_props
 			# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			return sent
@@ -509,6 +551,8 @@ class Bot(irc.IRCClient):
 						traceback.print_exc(file=open("err.log", "a"))
 						self.msg(user, "No mods?")
 				elif command == "h":
+					self.msg(user, "Need help? Check https://github.com/de-odex/aEverrBot/wiki for commands. ~~Most commands work now.~~")
+				elif command == "help":
 					self.msg(user, "Need help? Check https://github.com/de-odex/aEverrBot/wiki for commands. ~~Most commands work now.~~")
 				elif command == "r":
 					self.msg(user, "Command doesn't work yet, stay tuned! Under development.")
