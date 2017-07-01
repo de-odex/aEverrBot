@@ -394,3 +394,4 @@ config.py
 *.sln
 *.pyperf
 *.pyproj
+*.db
